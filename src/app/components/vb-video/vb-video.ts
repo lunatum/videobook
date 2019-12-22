@@ -1,9 +1,9 @@
-import {Component, Input, Output, EventEmitter, ElementRef, HostListener} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Component, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'vb-video',
-  styleUrls: [ './vb-video.css' ],
+  styleUrls: ['./vb-video.css'],
   templateUrl: './vb-video.html'
 })
 export class VbVideo {
@@ -13,7 +13,7 @@ export class VbVideo {
   private videoElement: HTMLVideoElement;
   displayedText: string = '';
 
-  constructor(private sanitizer: DomSanitizer, private element: ElementRef) {}
+  constructor(private sanitizer: DomSanitizer, private element: ElementRef) { }
 
   ngAfterViewInit() {
     this.videoElement = this.element.nativeElement.querySelector('video');
@@ -53,23 +53,23 @@ export class VbVideo {
   // Output stream
   @Output() videoStream: EventEmitter<{}> = new EventEmitter();
 
-  @HostListener('document:keydown', [ '$event' ])
+  @HostListener('document:keydown', ['$event'])
   onKeyup($event) {
     switch ($event.code) {
-    case 'Space':
-      $event.preventDefault();
-      return this.playPause();
-    case 'Enter':
-      $event.preventDefault();
-      return this.replayCaption();
-    case 'ArrowLeft':
-    case 'ArrowUp':
-      $event.preventDefault();
-      return this.nextCaption(-1);
-    case 'ArrowDown':
-    case 'ArrowRight':
-      $event.preventDefault();
-      return this.nextCaption(1);
+      case 'Space':
+        $event.preventDefault();
+        return this.playPause();
+      case 'Enter':
+        $event.preventDefault();
+        return this.replayCaption();
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        $event.preventDefault();
+        return this.nextCaption(-1);
+      case 'ArrowDown':
+      case 'ArrowRight':
+        $event.preventDefault();
+        return this.nextCaption(1);
     }
   }
 

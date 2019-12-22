@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SubtitlesParser {
-    constructor() {}
+    constructor() { }
 
     private ass(text: string) {
         let reAss = new RegExp(
@@ -22,9 +22,9 @@ export class SubtitlesParser {
             let match = timeStr.match(reTime);
             return Math.round(
                 parseInt(match[1], 10) * 60 * 60 * 1000 +
-                    parseInt(match[2], 10) * 60 * 1000 +
-                    parseInt(match[3], 10) * 1000 +
-                    parseInt(match[4], 10) * 10
+                parseInt(match[2], 10) * 60 * 1000 +
+                parseInt(match[3], 10) * 1000 +
+                parseInt(match[4], 10) * 10
             ) / 1000;
         };
 

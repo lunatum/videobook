@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { VbCaptions } from './components/vb-captions/vb-captions';
@@ -18,8 +17,7 @@ import { SubtitlesParser } from './services/subtitles-parser';
     VbVideo
   ],
   imports: [
-    BrowserModule,
-    HttpModule
+    BrowserModule
   ],
   providers: [SubtitlesParser],
   bootstrap: [AppComponent]

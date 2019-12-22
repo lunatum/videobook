@@ -14,19 +14,19 @@ export class AppComponent {
   currentTime: number = null;
   isError: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
   onVideoEvent(data) {
     switch (data.event) {
-    case 'captionsReady':
-      this.captions = data.captions;
-      return;
-    case 'captionChange':
-      this.activeCaption = data.activeCaption;
-      return;
-    case 'error':
-      this.isError = true;
-      return;
+      case 'captionsReady':
+        this.captions = data.captions;
+        return;
+      case 'captionChange':
+        this.activeCaption = data.activeCaption;
+        return;
+      case 'error':
+        this.isError = true;
+        return;
     }
   }
 

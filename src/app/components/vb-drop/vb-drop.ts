@@ -1,9 +1,9 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {SubtitlesParser} from '../../services/subtitles-parser';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { SubtitlesParser } from '../../services/subtitles-parser';
 
 @Component({
   selector: 'vb-drop',
-  styleUrls: [ './vb-drop.css' ],
+  styleUrls: ['./vb-drop.css'],
   templateUrl: './vb-drop.html'
 })
 export class VbDrop {
@@ -14,7 +14,7 @@ export class VbDrop {
   isDragover = false;
   prevVideoUrl = null;
 
-  constructor(private subParser: SubtitlesParser) {}
+  constructor(private subParser: SubtitlesParser) { }
 
   private isCaptions(file) {
     return /\.(vtt|srt|ass|ssa)$/.test(file.name);

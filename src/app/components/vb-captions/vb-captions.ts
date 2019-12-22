@@ -1,8 +1,8 @@
-import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'vb-captions',
-  styleUrls: [ './vb-captions.css' ],
+  styleUrls: ['./vb-captions.css'],
   templateUrl: './vb-captions.html'
 })
 export class VbCaptions {
@@ -19,7 +19,7 @@ export class VbCaptions {
   }
   get activeCaption() { return this.currentActive; }
 
-  constructor(private element: ElementRef) {}
+  constructor(private element: ElementRef) { }
 
   selectCaption(caption) {
     this.captionSelect.next({
