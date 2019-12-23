@@ -11,15 +11,6 @@
   position: relative;
 }
 
-.home__title {
-  font-size: 1em;
-  font-weight: normal;
-  margin: 1em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .home__main {
   flex: 1 80%;
   position: relative;

@@ -11,8 +11,6 @@
         </div>
 
         <div class="home__video" [hidden]="!videoUrl || isError">
-          <h3 class="home__title">{{ title }}</h3>
-
           <vb-video [videoUrl]="videoUrl"
                     [captionsUrl]="captionsUrl"
                     [currentTime]="currentTime"
