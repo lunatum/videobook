@@ -1,12 +1,15 @@
 .vb-video {
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  display: flex;
 }
 
 .vb-video__element {
   width: 100%;
   display: block;
   margin: 0;
+  float: right;
+  flex: 0 1 auto;
 }
 
 .vb-video__cc {
