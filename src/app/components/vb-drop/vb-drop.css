@@ -1,7 +1,7 @@
 .vb-drop {
   width: 100%;
   height: 100%;
-  background-color: #00adea;
+  background-color: black;
   transition: background-color 100ms ease-out;
 }
 
