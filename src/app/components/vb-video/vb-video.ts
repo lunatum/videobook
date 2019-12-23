@@ -7,17 +7,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './vb-video.html'
 })
 export class VbVideo {
-  private captionTracks = [];
-  private activeCaption;
-  private prevActiveCaption;
-  private videoElement: HTMLVideoElement;
-  displayedText: string = '';
 
   constructor(private sanitizer: DomSanitizer, private element: ElementRef) { }
-
-  ngAfterViewInit() {
-    this.videoElement = this.element.nativeElement.querySelector('video');
-  }
 
   // Video URL
   @Input()
@@ -49,12 +40,22 @@ export class VbVideo {
   get captionsUrl() {
     return this.captionTracks[0] ? this.captionTracks[0].url : null;
   }
+  isFullscreen = false;
+  captionTracks = [];
+  private activeCaption: TextTrackCue;
+  private prevActiveCaption: any;
+  private videoElement: HTMLVideoElement;
+  displayedText = '';
 
   // Output stream
   @Output() videoStream: EventEmitter<{}> = new EventEmitter();
 
+  ngAfterViewInit() {
+    this.videoElement = this.element.nativeElement.querySelector('video');
+  }
+
   @HostListener('document:keydown', ['$event'])
-  onKeyup($event) {
+  onKeyup($event: KeyboardEvent) {
     switch ($event.code) {
       case 'Space':
         $event.preventDefault();
@@ -77,33 +78,33 @@ export class VbVideo {
     this.videoElement.paused ? this.videoElement.play() : this.videoElement.pause();
   }
 
-  private playCaption(caption) {
-    if (!caption) return;
+  private playCaption(caption: TextTrackCue) {
+    if (!caption) { return; }
     this.videoElement.currentTime = caption.startTime;
     this.videoElement.play();
   }
 
   private replayCaption() {
-    let track = this.getTrack();
-    if (!track) return;
+    const track = this.getTrack();
+    if (!track) { return; }
     this.playCaption(this.activeCaption || this.prevActiveCaption || track.cues[0]);
   }
 
-  private nextCaption(delta) {
-    let track = this.getTrack();
-    if (!track) return;
+  private nextCaption(delta: number) {
+    const track = this.getTrack();
+    if (!track) { return; }
 
-    let active = this.activeCaption || this.prevActiveCaption;
-    if (!active) return this.playCaption(track.cues[0]);
+    const active = this.activeCaption || this.prevActiveCaption;
+    if (!active) { return this.playCaption(track.cues[0]); }
 
-    let index = Array.prototype.indexOf.call(track.cues, active);
-    let next = track.cues[index + delta];
+    const index = Array.prototype.indexOf.call(track.cues, active);
+    const next = track.cues[index + delta];
 
     this.playCaption(next);
   }
 
-  private getCaption(cue) {
-    let caption = {
+  private getCaption(cue: TextTrackCue) {
+    const caption = {
       id: cue.id,
       startTime: cue.startTime,
       endTime: cue.endTime,
@@ -117,10 +118,10 @@ export class VbVideo {
   }
 
   private getTrack() {
-    let tracks = this.videoElement.textTracks;
-    let track = tracks && tracks[0];
+    const tracks = this.videoElement.textTracks;
+    const track = tracks && tracks[0];
 
-    if (!track) return null;
+    if (!track) { return null; }
 
     // Hide the built-in captions
     track.mode = 'hidden';
@@ -132,8 +133,8 @@ export class VbVideo {
     this.activeCaption = null;
     this.prevActiveCaption = null;
 
-    let track = this.getTrack();
-    if (!track) return;
+    const track = this.getTrack();
+    if (!track) { return; }
 
     this.videoStream.next({
       event: 'captionsReady',
@@ -142,20 +143,20 @@ export class VbVideo {
   }
 
   captionsOnCuechange() {
-    if (this.activeCaption) this.prevActiveCaption = this.activeCaption;
+    if (this.activeCaption) { this.prevActiveCaption = this.activeCaption; }
     this.activeCaption = null;
 
-    let track = this.getTrack();
-    if (!track) return;
+    const track = this.getTrack();
+    if (!track) { return; }
 
-    let activeCue = track.activeCues[0];
+    const activeCue = track.activeCues[0];
     let transformedCaption = null;
 
     if (activeCue) {
       this.activeCaption = activeCue;
       transformedCaption = this.getCaption(activeCue);
 
-      if (transformedCaption.text) this.displayedText = transformedCaption.text;
+      if (transformedCaption.text) { this.displayedText = transformedCaption.text; }
     }
 
     this.videoStream.next({

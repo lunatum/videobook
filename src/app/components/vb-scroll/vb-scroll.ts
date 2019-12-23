@@ -2,14 +2,14 @@ import { Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({ selector: '[vbScroll]' })
 export class VbScroll {
-  private el;
+  private el: any;
 
   constructor(el: ElementRef) {
     this.el = el.nativeElement;
   }
 
   @Input('vbScroll')
-  set isActive(toggle) {
+  set isActive(toggle: any) {
     toggle && this.scroll();
   }
 

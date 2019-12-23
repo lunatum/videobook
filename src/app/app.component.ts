@@ -12,7 +12,7 @@ export class AppComponent {
   captions: any[] = null;
   activeCaption = null;
   currentTime: number = null;
-  isError: boolean = false;
+  isError = false;
 
   constructor() { }
 

@@ -5,7 +5,7 @@ export class SubtitlesParser {
     constructor() { }
 
     private ass(text: string) {
-        let reAss = new RegExp(
+        const reAss = new RegExp(
             'Dialogue:\\s\\d,' +                 // get time and subtitle
             '(\\d+:\\d\\d:\\d\\d.\\d\\d),' +     // start time
             '(\\d+:\\d\\d:\\d\\d.\\d\\d),' +     // end time
@@ -15,11 +15,11 @@ export class SubtitlesParser {
             '(.*)$',                             // subtitle
             'i'
         );
-        let reTime = /(\d+):(\d\d):(\d\d).(\d\d)/;
-        let reStyle = /\{[^}]+\}/g;
+        const reTime = /(\d+):(\d\d):(\d\d).(\d\d)/;
+        const reStyle = /\{[^}]+\}/g;
 
-        let getSeconds = function (timeStr) {
-            let match = timeStr.match(reTime);
+        const getSeconds = (timeStr: string) => {
+            const match = timeStr.match(reTime);
             return Math.round(
                 parseInt(match[1], 10) * 60 * 60 * 1000 +
                 parseInt(match[2], 10) * 60 * 1000 +
@@ -28,9 +28,9 @@ export class SubtitlesParser {
             ) / 1000;
         };
 
-        let lines = text.split(/[\n\r]+/g);
-        let captions = lines.map(function (line, index) {
-            let match = line.match(reAss);
+        const lines = text.split(/[\n\r]+/g);
+        const captions = lines.map((line, index) => {
+            const match = line.match(reAss);
             if (!match) { return null; }
             return {
                 id: index + 1,
@@ -39,7 +39,7 @@ export class SubtitlesParser {
                 text: match[5].replace(reStyle, '').replace(/\\N/g, '\n'),
                 voice: match[3] && match[4] ? match[3] + ' ' + match[4] : ''
             };
-        }).filter(function (caption) {
+        }).filter((caption) => {
             return caption != null;
         });
 
@@ -47,14 +47,14 @@ export class SubtitlesParser {
     }
 
     private srt(text: string) {
-        let reTime = /(\d\d):(\d\d):(\d\d),(\d\d\d)/;
+        const reTime = /(\d\d):(\d\d):(\d\d),(\d\d\d)/;
 
         if (!reTime.test(text)) {
             return null;
         }
 
-        let getSeconds = function (timeStr) {
-            let match = timeStr.match(reTime);
+        const getSeconds = (timeStr: string) => {
+            const match = timeStr.match(reTime);
             return Math.round(
                 parseInt(match[1], 10) * 60 * 60 * 1000 +
                 parseInt(match[2], 10) * 60 * 1000 +
@@ -63,18 +63,18 @@ export class SubtitlesParser {
             ) / 1000;
         };
 
-        let entries = text.split(/\n[\r\n]+/g);
-        let captions = entries.map(function (entry) {
-            let lines = entry.split(/\n+/g);
+        const entries = text.split(/\n[\r\n]+/g);
+        const captions = entries.map((entry) => {
+            const lines = entry.split(/\n+/g);
             if (lines.length < 3) { return null; }
-            let timestamps = lines[1].split(/\s*-->\s*/);
+            const timestamps = lines[1].split(/\s*-->\s*/);
             return {
                 id: lines[0],
                 startTime: getSeconds(timestamps[0]),
                 endTime: getSeconds(timestamps[1]),
                 text: lines.slice(2).join('\n')
             };
-        }).filter(function (caption) {
+        }).filter(caption => {
             return caption != null;
         });
 
@@ -82,10 +82,10 @@ export class SubtitlesParser {
     }
 
     private formatVtt(captions: any[]) {
-        let padWithZeros = (num, digits) => ('0000' + num).slice(-digits);
+        const padWithZeros = (num: string | number, digits: number) => ('0000' + num).slice(-digits);
 
-        let formatTime = function (seconds) {
-            let date = new Date(2000, 0, 1, 0, 0, 0, seconds * 1000);
+        const formatTime = (seconds: number) => {
+            const date = new Date(2000, 0, 1, 0, 0, 0, seconds * 1000);
             return [
                 padWithZeros(date.getHours(), 2),
                 padWithZeros(date.getMinutes(), 2),
@@ -93,7 +93,7 @@ export class SubtitlesParser {
             ].join(':');
         };
 
-        let lines = captions.map(function (caption) {
+        const lines = captions.map(caption => {
             return [
                 caption.id,
                 formatTime(caption.startTime) + ' --> ' + formatTime(caption.endTime),
@@ -105,11 +105,11 @@ export class SubtitlesParser {
     }
 
     toVTT(text: string) {
-        if (text.indexOf('WEBVTT') == 0) {
+        if (text.indexOf('WEBVTT') === 0) {
             return text;
         }
 
-        let parsed = this.ass(text) || this.srt(text);
+        const parsed = this.ass(text) || this.srt(text);
         if (parsed) {
             return this.formatVtt(parsed);
         }

@@ -21,17 +21,17 @@ export class VbCaptions {
 
   constructor(private element: ElementRef) { }
 
-  selectCaption(caption) {
+  selectCaption(caption: any) {
     this.captionSelect.next({
-      caption: caption
+      caption
     });
   }
 
-  isPrevActive(caption) {
-    return this.lastActive && (this.lastActive.id == caption.id);
+  isPrevActive(caption: { id: any; }) {
+    return this.lastActive && (this.lastActive.id === caption.id);
   }
 
-  isActive(caption) {
-    return this.currentActive && (this.currentActive.id == caption.id);
+  isActive(caption: { id: any; }) {
+    return this.currentActive && (this.currentActive.id === caption.id);
   }
 }

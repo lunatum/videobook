@@ -16,22 +16,22 @@ export class VbDrop {
 
   constructor(private subParser: SubtitlesParser) { }
 
-  private isCaptions(file) {
+  private isCaptions(file: { name: string; }) {
     return /\.(vtt|srt|ass|ssa)$/.test(file.name);
   }
 
-  private loadCaptions(file) {
-    let reader = new FileReader();
+  private loadCaptions(file: Blob) {
+    const reader = new FileReader();
     reader.readAsText(file);
-    reader.onload = (e) => {
-      let vtt = this.subParser.toVTT(e.target['result']);
+    reader.onload = (e: any) => {
+      const vtt = this.subParser.toVTT(reader.result as string);
       this.uploadCaptions.next({
         url: 'data:text/vtt;charset=utf-8,' + encodeURIComponent(vtt)
       });
     };
   }
 
-  private loadVideo(file) {
+  private loadVideo(file: { type: any; name: any; }) {
     if (this.prevVideoUrl) {
       URL.revokeObjectURL(this.prevVideoUrl);
     }
@@ -44,26 +44,26 @@ export class VbDrop {
     });
   }
 
-  private stopEvent(e) {
+  private stopEvent(e: Event) {
     e.preventDefault();
     e.stopPropagation();
   }
 
-  onDragover(e) {
+  onDragover(e: DragEvent) {
     this.stopEvent(e);
     this.isDragover = true;
   }
 
-  onDragleave(e) {
+  onDragleave(e: DragEvent) {
     this.stopEvent(e);
     this.isDragover = false;
   }
 
-  onDrop(e) {
+  onDrop(e: DragEvent) {
     this.stopEvent(e);
     this.isDragover = false;
 
-    Array.prototype.forEach.call(e.dataTransfer.files, (file) => {
+    Array.prototype.forEach.call(e.dataTransfer.files, (file: any) => {
       this.isCaptions(file) ? this.loadCaptions(file) : this.loadVideo(file);
     });
   }
