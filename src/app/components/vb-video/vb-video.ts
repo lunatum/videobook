@@ -40,7 +40,6 @@ export class VbVideo {
   get captionsUrl() {
     return this.captionTracks[0] ? this.captionTracks[0].url : null;
   }
-  isFullscreen = false;
   captionTracks = [];
   private activeCaption: TextTrackCue;
   private prevActiveCaption: any;

@@ -1,4 +1,4 @@
-<div class="vb-video" [hidden]="!videoUrl" [ngClass]="{ 'vb-video--not-fullscreen': !isFullscreen }">
+<div class="vb-video" [hidden]="!videoUrl" >
   <video class="vb-video__element"
          (load)="videoStream.next({ event: 'load' })"
          (play)="videoStream.next({ event: 'play' })"
