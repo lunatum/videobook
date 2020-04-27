@@ -6,7 +6,19 @@
                   'vb-captions__caption_active': isActive(caption),
                   'vb-captions__caption_previous': isPrevActive(caption)
                   }"
-       (click)="selectCaption(caption)"
-       [innerHTML]="caption.text">
+       (click)="selectCaption(caption)">
+       <span [ngClass]="{
+         'vb-captions__invisible_quote': true,
+         'vb-captions__invisible_quote_nodisplay': shouldDisableQuotes
+        }">
+         '
+        </span>
+       <span [innerHTML]='caption.text'>'</span>
+       <span [ngClass]="{
+         'vb-captions__invisible_quote': true,
+         'vb-captions__invisible_quote_nodisplay': shouldDisableQuotes
+        }">
+         '
+        </span>
   </div>
 </div>

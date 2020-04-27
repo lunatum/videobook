@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 
 @Component({
   selector: 'vb-captions',
@@ -7,6 +7,7 @@ import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/cor
 })
 export class VbCaptions {
   lastActive = null;
+  shouldDisableQuotes = true;
   currentActive = null;
 
   @Input() captions: any[];
@@ -25,6 +26,16 @@ export class VbCaptions {
     this.captionSelect.next({
       caption
     });
+  }
+
+  wrapCaption(caption: any) {
+    return "<span class=\"vb-captions_invisible_quote\">'</span>" + caption + "<span class=\"vb-captions_invisible_quote\">'</span>";
+  }
+
+  @HostListener('document:selectionchange', ['$event'])
+  onSelectionChange(event: any) {
+    let selected = document.getSelection().toString();
+    this.shouldDisableQuotes = selected.length > 0 && selected.includes("\n");
   }
 
   isPrevActive(caption: { id: any; }) {
