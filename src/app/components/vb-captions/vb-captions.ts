@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter, ElementRef, HostListener } from
 })
 export class VbCaptions {
   lastActive = null;
-  shouldDisableQuotes = true;
+  shouldDisableQuotes = false;
   currentActive = null;
 
   @Input() captions: any[];
@@ -35,7 +35,10 @@ export class VbCaptions {
   @HostListener('document:selectionchange', ['$event'])
   onSelectionChange(event: any) {
     let selected = document.getSelection().toString();
-    this.shouldDisableQuotes = selected.length > 0 && selected.includes("\n");
+    if (!this.shouldDisableQuotes)
+      this.shouldDisableQuotes = selected.length > 0 && selected.includes("'\n'");
+    else
+      this.shouldDisableQuotes = selected.length > 0 && selected.includes("\n")
   }
 
   isPrevActive(caption: { id: any; }) {
