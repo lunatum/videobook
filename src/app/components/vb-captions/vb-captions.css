@@ -2,32 +2,28 @@
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  background: black;
-  color: #665c54;
+  background-color: black;
+  color: #333;
 }
 
 .vb-captions__caption {
-  font-size: 0.9em;
+  font-size: medium;
   cursor: pointer;
   margin: 0;
   padding: 1em;
   transition: background-color 100ms linear;
 }
 
-.vb-captions__caption * {
-  color: #665c54 !important;
-}
-
 .vb-captions__caption:hover {
-  background-color: #919EA9;
+  background-color: #91aab1;
   color: black;
 }
 
 .vb-captions__caption:active,
 .vb-captions__caption_active:hover,
 .vb-captions__caption_active {
-  background-color: #757575;
-  color: #fff;
+  background-color: #59757d;
+  color: black;
 }
 
 .vb-captions__caption_active,
@@ -36,8 +32,8 @@
 }
 
 .vb-captions__caption_previous {
-  background-color: #616161;
-  color: #fff;
+  background-color: #4a6268;
+  color: black;
 }
 
 .vb-captions__invisible_quote {
